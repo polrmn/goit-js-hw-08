@@ -13,6 +13,9 @@ setInputEmailValue();
 setTextareaMessageValue();
 
 formRef.addEventListener('input', throttle(onInputSaveValue, 500));
+console.log(email, message);
+// console.log(formData);
+
 formRef.addEventListener('submit', onFormSubmit);
 
 function onInputSaveValue (event) {
@@ -22,10 +25,19 @@ function onInputSaveValue (event) {
 }
 
 function onFormSubmit(event) {
-    event.preventDefault();
-    console.log(JSON.parse(localStorage.getItem('feedback-form-state')));
-    event.currentTarget.reset();
-    localStorage.clear();
+  if (
+    !event.currentTarget.elements.email.value ||
+    !event.currentTarget.elements.message.value
+  ) {
+    alert('Please fill in all the fields!');
+    return;
+  } 
+  
+  event.preventDefault();
+  console.log(JSON.parse(localStorage.getItem('feedback-form-state')));
+  event.currentTarget.reset();
+  localStorage.clear();
+  formData = {};
 }
 
 function setInputEmailValue() {
